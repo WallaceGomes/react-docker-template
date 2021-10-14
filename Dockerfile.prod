@@ -1,0 +1,14 @@
+FROM node as build
+WORKDIR /app
+#COPIA O PACKAGE.JSON PRO WORKDIR
+COPY package.json .
+RUN npm install
+#COPIA TODO O RESPTO DO CÓDIGO
+COPY . .
+ARG REACT_APP_NAME
+ENV REACT_APP_NAME=$REACT_APP_NAME
+RUN npm run build
+
+FROM nginx
+#COPIA TUDO DO BUILD PRA SERVIR A PÁGINA
+COPY --from=build /app/build /usr/share/nginx/html

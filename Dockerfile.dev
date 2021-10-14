@@ -1,0 +1,9 @@
+FROM node
+WORKDIR /app
+#COPIA O PACKAGE.JSON PRO WORKDIR
+COPY package.json .
+RUN npm install
+#COPIA TODO O RESPTO DO CÓDIGO
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]
